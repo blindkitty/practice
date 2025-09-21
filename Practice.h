@@ -1,13 +1,23 @@
 #pragma once
 #include "ITask.h"
-#include "Task1.h"
+#include "tasks/Task1.h"
 
 class Practice {
-private:
-    std::vector<ITask> tasks;
 public:
     Practice() {
-        tasks.push_back(new Task1);
+        tasks.push_back(new Task1());
     }
 
+    ~Practice() {
+        for (auto task: tasks) {
+            delete task;
+        }
+    }
+
+    void execute(int taskNumber) {
+        tasks[taskNumber - 1]->execute();
+    }
+
+private:
+    std::vector<ITask *> tasks;
 };

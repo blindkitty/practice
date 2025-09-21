@@ -1,21 +1,21 @@
 #pragma once
 #include <bits/stdc++.h>
-#include "ITask.h"
+#include "../ITask.h"
 
 
-class Task1 : ITask {
+class Task1 : public ITask {
 public:
-    std::string decimalToBase(int a, int c) {
-        std::string s = "";
-        while (a > 0) {
-            s += std::to_string(a % c);
-            a /= c;
+    static std::string decimalToBase(int num, int base) {
+        std::string newNum;
+        while (num > 0) {
+            newNum += std::to_string(num % base);
+            num /= base;
         }
-        std::reverse(s.begin(), s.end());
-        return s;
+        std::reverse(newNum.begin(), newNum.end());
+        return newNum;
     }
 
-    int digitToDecimal(char c) {
+    static int digitToDecimal(char c) {
         if (c >= '0' && c <= '9') {
             return c - '0';
         }
@@ -26,13 +26,13 @@ public:
     }
 
 
-    int convertToDecimal(std::string num, int c) {
+    static int convertToDecimal(std::string num, int base) {
         int decimalVal = 0;
         int power = 1;
         for (int i = num.length() - 1; i >= 0; --i) {
             int digit = digitToDecimal(num[i]);
             decimalVal += digit * power;
-            power *= c;
+            power *= base;
         }
         return decimalVal;
     }
@@ -55,7 +55,7 @@ public:
         //
         std::cout << pow(2, 8) + pow(2, 7) + pow(2, 6) + pow(2, 5) + pow(2, 1) + pow(2, -2) << "\n";
         //
-        std::cout << decimalToBase(convertToDecimal("442", 6), 5) << "\n";
+        std::cout << decimalToBase(convertToDecimal("442", 6), 5) << "\n\n";
 
         // c)
         std::cout << "c)" << "\n";
@@ -65,4 +65,3 @@ public:
         std::cout << a + b + c;
     }
 };
-
