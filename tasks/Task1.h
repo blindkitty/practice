@@ -15,12 +15,12 @@ public:
         return newNum;
     }
 
-    static int digitToDecimal(char c) {
-        if (c >= '0' && c <= '9') {
-            return c - '0';
+    static int digitToDecimal(char ch) {
+        if (ch >= '0' && ch <= '9') {
+            return ch - '0';
         }
-        if (c >= 'a' && c <= 'f') {
-            return 10 + (c - 'a');
+        if (ch >= 'a' && ch <= 'f') {
+            return 10 + (ch - 'a');
         }
         return 0;
     }
