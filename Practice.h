@@ -1,10 +1,12 @@
 #pragma once
 #include "ITask.h"
+#include "tasks/Homework.h"
 #include "tasks/Task1.h"
 
 class Practice {
 public:
     Practice() {
+        tasks.push_back(new Homework());
         tasks.push_back(new Task1());
     }
 
@@ -15,7 +17,7 @@ public:
     }
 
     void execute(int taskNumber) {
-        tasks[taskNumber - 1]->execute();
+        tasks[taskNumber]->execute();
     }
 
 private:

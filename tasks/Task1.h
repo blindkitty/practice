@@ -5,6 +5,35 @@
 
 class Task1 : public ITask {
 public:
+    void execute() override {
+        // a)
+        std::cout << "a)" << '\n';
+        //
+        std::cout << decimalToBase(0b11100101 + 0b100011, 2) << '\n';
+        //
+        std::cout << decimalToBase(0b11001101 - 0b1111, 2) << '\n';
+        //
+        std::cout << decimalToBase(0b1011 * 0b1001, 2) << "\n\n";
+
+
+        // b)
+        std::cout << "b)" << '\n';
+        //
+        std::cout << decimalToBase(55, 2) << '\n';
+        //
+        std::cout << pow(2, 8) + pow(2, 7) + pow(2, 6) + pow(2, 5) + pow(2, 1) + pow(2, -2) << '\n';
+        //
+        std::cout << decimalToBase(convertToDecimal("442", 6), 5) << '\n';
+
+        // c)
+        std::cout << "c)" << '\n';
+        double a = pow(2, 7) + pow(2, 4) + pow(2, 3) + pow(2, 1) + pow(2, 0) + pow(2, -3) + pow(2, -4);
+        double b = convertToDecimal("257", 8);
+        double c = convertToDecimal("a28", 16);
+        std::cout << a + b + c;
+    }
+
+private:
     static std::string decimalToBase(int num, int base) {
         std::string newNum;
         while (num > 0) {
@@ -35,33 +64,5 @@ public:
             power *= base;
         }
         return decimalVal;
-    }
-
-    void execute() override {
-        // a)
-        std::cout << "a)" << "\n";
-        //
-        std::cout << decimalToBase(0b11100101 + 0b100011, 2) << "\n";
-        //
-        std::cout << decimalToBase(0b11001101 - 0b1111, 2) << "\n";
-        //
-        std::cout << decimalToBase(0b1011 * 0b1001, 2) << "\n\n";
-
-
-        // b)
-        std::cout << "b)" << "\n";
-        //
-        std::cout << decimalToBase(55, 2) << "\n";
-        //
-        std::cout << pow(2, 8) + pow(2, 7) + pow(2, 6) + pow(2, 5) + pow(2, 1) + pow(2, -2) << "\n";
-        //
-        std::cout << decimalToBase(convertToDecimal("442", 6), 5) << "\n\n";
-
-        // c)
-        std::cout << "c)" << "\n";
-        double a = pow(2, 7) + pow(2, 4) + pow(2, 3) + pow(2, 1) + pow(2, 0) + pow(2, -3) + pow(2, -4);
-        double b = convertToDecimal("257", 8);
-        double c = convertToDecimal("a28", 16);
-        std::cout << a + b + c;
     }
 };
