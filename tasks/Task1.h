@@ -1,29 +1,29 @@
 #pragma once
-#include <bits/stdc++.h>
+#include <iostream>
 #include "../ITask.h"
-
 
 class Task1 : public ITask {
 public:
     void execute() override {
         // a)
         std::cout << "a)" << '\n';
-        //
+
         std::cout << decimalToBase(0b11100101 + 0b100011, 2) << '\n';
-        //
+
         std::cout << decimalToBase(0b11001101 - 0b1111, 2) << '\n';
-        //
+
         std::cout << decimalToBase(0b1011 * 0b1001, 2) << "\n\n";
 
 
         // b)
         std::cout << "b)" << '\n';
-        //
+
         std::cout << decimalToBase(55, 2) << '\n';
-        //
+
         std::cout << pow(2, 8) + pow(2, 7) + pow(2, 6) + pow(2, 5) + pow(2, 1) + pow(2, -2) << '\n';
-        //
-        std::cout << decimalToBase(convertToDecimal("442", 6), 5) << '\n';
+
+        std::cout << decimalToBase(convertToDecimal("442", 6), 5) << "\n\n";
+
 
         // c)
         std::cout << "c)" << '\n';
@@ -34,14 +34,14 @@ public:
     }
 
 private:
-    static std::string decimalToBase(int num, int base) {
-        std::string newNum;
-        while (num > 0) {
-            newNum += std::to_string(num % base);
-            num /= base;
+    static std::string decimalToBase(int value, int base) {
+        std::string newValue;
+        while (value > 0) {
+            newValue += std::to_string(value % base);
+            value /= base;
         }
-        std::reverse(newNum.begin(), newNum.end());
-        return newNum;
+        std::reverse(newValue.begin(), newValue.end());
+        return newValue;
     }
 
     static int digitToDecimal(char ch) {
@@ -55,14 +55,14 @@ private:
     }
 
 
-    static int convertToDecimal(std::string num, int base) {
-        int decimalVal = 0;
+    static int convertToDecimal(std::string value, int base) {
+        int decimalValue = 0;
         int power = 1;
-        for (int i = num.length() - 1; i >= 0; --i) {
-            int digit = digitToDecimal(num[i]);
-            decimalVal += digit * power;
+        for (int i = value.length() - 1; i >= 0; --i) {
+            int digit = digitToDecimal(value[i]);
+            decimalValue += digit * power;
             power *= base;
         }
-        return decimalVal;
+        return decimalValue;
     }
 };

@@ -47,9 +47,9 @@ private:
     double calculateСylinderVolume() {
         double area;
         double height;
-        std::cout << "Enter area of cylinder: ";
+        std::cout << "\nEnter area of cylinder: ";
         std::cin >> area;
-        std::cout << "Enter height of cylinder: ";
+        std::cout << "\nEnter height of cylinder: ";
         std::cin >> height;
         return area * height;
     }
