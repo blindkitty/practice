@@ -5,6 +5,11 @@
 class Task2 : public ITask {
 public:
     void execute() override {
+        runSubtaskA1();
+        runSubtaskA2();
+    }
+
+    void runSubtaskA1() {
         std::cout << "x y z F" << '\n';
         for (int x = 0; x <= 1; x++) {
             for (int y = 0; y <= 1; y++) {
@@ -14,7 +19,9 @@ public:
                 }
             }
         }
-        system("pause");
+    }
+
+    void runSubtaskA2() {
         std::cout << "\nx y z F" << '\n';
         for (int x = 0; x <= 1; x++) {
             for (int y = 0; y <= 1; y++) {

@@ -20,31 +20,37 @@ struct Product {
 class Task10 : public ITask {
 public:
     void execute() override {
+        std::vector<Product> storage = getUserInput();
+        double totalCost = calculateTotalCost(storage);
+        std::cout << "Total cost: " << totalCost << std::endl;
+    }
+
+private:
+    std::vector<Product> getUserInput() const {
         int numberOfProducts;
-        std::cout << "Enter number of products: " << '\n';
+        std::cout << "Enter number of products: \n";
         std::cin >> numberOfProducts;
-
-        std::vector<Product> storage;
+        std::vector<Product> products;
         for (int i = 0; i < numberOfProducts; i++) {
-            std::cout << "Enter data for product (name, year, price, quantity): \n";
+            std::cout << "Enter data for " << i + 1 << " product (name, year, price, quantity): \n";
+
             std::string name;
-            std::cin >> name;
-
             int yearOfRelease;
-            std::cin >> yearOfRelease;
-
             double unitPrice;
-            std::cin >> unitPrice;
-
             int quantity;
-            std::cin >> quantity;
-            storage.push_back(Product(name, yearOfRelease, unitPrice, quantity));
-        }
 
+            std::cin >> name >> yearOfRelease >> unitPrice >> quantity;
+
+            products.push_back(Product(name, yearOfRelease, unitPrice, quantity));
+        }
+        return products;
+    }
+
+    double calculateTotalCost(const std::vector<Product> &products) const {
         double totalCost = 0;
-        for (auto &p: storage) {
+        for (auto &p: products) {
             totalCost += p._unitPrice * p._quantity;
         }
-        std::cout << "Total cost: " << totalCost << '\n';
+        return totalCost;
     }
 };

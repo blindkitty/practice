@@ -1,27 +1,39 @@
 #pragma once
 #include <iostream>
-#include <cmath>
+#include <vector>
 #include "../ITask.h"
 
 class Task7 : public ITask {
 public:
     void execute() override {
-        int n;
-        std::cout << "Enter even number n: \n";
-        std::cin >> n;
+        std::vector<std::vector<double> > testCases = {
+            {1, 2, 3, 4, 5, 6},
+            {10, -21.2, 5, 12},
+            {20, 30, 40, 50, 1, 5},
+            {0, 0}
+        };
 
-        std::cout << "Enter n numbers: \n";
-        std::vector<double> a;
-        for (int i = 0; i < n; i++) {
-            double value;
-            std::cin >> value;
-            a.push_back(value);
+        for (const auto &testCase: testCases) {
+            runTest(testCase);
+            std::cout << '\n';
         }
+    }
 
+private:
+    double getMinSymmetricProduct(const std::vector<double>& numbers) {
         std::vector<double> products;
+        int n = numbers.size();
         for (int i = 0; i < n / 2; i++) {
-            products.push_back(a[i] * a[n - 1 - i]);
+            products.push_back(numbers[i] * numbers[n - 1 - i]);
         }
-        std::cout << *std::min_element(products.begin(), products.end()) << '\n';
+        return *std::min_element(products.begin(), products.end());
+    }
+
+    void runTest(std::vector<double> a) {
+        std::cout << "Input data: \n";
+        for (const auto &el: a) {
+            std::cout << el << ' ';
+        }
+        std::cout << "\nResult: \n" << getMinSymmetricProduct(a) << '\n';
     }
 };

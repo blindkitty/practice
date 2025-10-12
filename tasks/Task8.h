@@ -3,45 +3,62 @@
 #include <cmath>
 #include "../ITask.h"
 
+
 class Task8 : public ITask {
 public:
+    using Matrix = std::vector<std::vector<int> >;
+
     void execute() override {
-        int n;
-        std::cout << "Enter number of rows:" << '\n';
-        std::cin >> n;
-
-        int m;
-        std::cout << "Enter even number of columns:" << '\n';
-        std::cin >> m;
-
-        // массив, содержащий n элементов
-        // каждый элемент - массив, который представляет собой строку из m нулей
-        std::vector<std::vector<int> > matrix(n, std::vector<int>(m));
-
-        std::cout << "Enter matrix:" << '\n';
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                std::cin >> matrix[i][j];
+        std::vector<Matrix> testCases = {
+            {
+                {1, 4, 7, 0},
+                {2, 5, 8, 0},
+                {3, 6, 9, 0}
+            },
+            {
+                {1, 2, 3, 4, 5, 6},
+                {7, 8, 9, 10, 11, 12},
+                {13, 14, 15, 16, 17, 18}
+            },
+            {
+                {1, 2}
             }
+        };
+        for (auto &testCase: testCases) {
+            runTest(testCase);
         }
-        printMatrix(matrix);
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m / 2; j++) {
-                std::swap(matrix[i][j], matrix[i][m - 1 - j]);
-            }
-        }
-        printMatrix(matrix);
     }
 
 private:
-    void printMatrix(std::vector<std::vector<int> > matrix) {
-        for (int i = 0; i < matrix.size(); i++) {
-            for (int j = 0; j < matrix[i].size(); j++) {
-                std::cout << matrix[i][j] << " ";
+    Matrix swapColumns(const Matrix &originalMatrix) const {
+        Matrix newMatrix = originalMatrix;
+        int numRows = originalMatrix.size();
+        int numCols = originalMatrix[0].size();
+        for (int j = 0; j < numCols / 2; j++) {
+            for (int i = 0; i < numRows; i++) {
+                std::swap(newMatrix[i][j], newMatrix[i][numCols - 1 - j]);
+            }
+        }
+        return newMatrix;
+    }
+
+    void printMatrix(const Matrix &matrix) const {
+        for (const auto &row: matrix) {
+            for (int element: row) {
+                std::cout << element << " ";
             }
             std::cout << '\n';
         }
         std::cout << '\n';
+    }
+
+    void runTest(const Matrix &matrix) const {
+        std::cout << "Original matrix:\n";
+        printMatrix(matrix);
+
+        Matrix newMatrix = swapColumns(matrix);
+
+        std::cout << "Final matrix:\n";
+        printMatrix(newMatrix);
     }
 };

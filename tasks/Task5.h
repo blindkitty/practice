@@ -1,28 +1,51 @@
 #pragma once
 #include <iostream>
 #include <cmath>
+#include <vector>
 #include "../ITask.h"
+
 
 class Task5 : public ITask {
 public:
-    void execute() override {
+    struct NumberPair {
         int n;
         int k;
-        std::cout << "Enter two numbers: \n";
-        std::cin >> n >> k;
+    };
 
-        int numerator = 1;
-        for (int i = 0; i < k; i++) {
-            numerator *= n - i;
+
+    void execute() override {
+        std::vector<NumberPair> testCases = {
+            {5, 1},
+            {4, 2},
+            {20, 10},
+            {0, 0}
+        };
+
+        for (auto testCase: testCases) {
+            runTest(testCase);
+            std::cout << '\n';
         }
-        std::cout << numerator / fact(k) << '\n';
     }
 
 private:
-    int fact(int n) {
-        if (n == 0 || n == 1) {
+    long long calculate(NumberPair pair) {
+        long long numerator = 1;
+        for (int i = 0; i < pair.k; i++) {
+            numerator *= pair.n - i;
+        }
+        return numerator / fact(pair.k);
+    }
+
+    long long fact(int num) {
+        if (num == 0 || num == 1) {
             return 1;
         }
-        return n * fact(n - 1);
+        return num * fact(num - 1);
+    }
+
+    void runTest(NumberPair pair) {
+        std::cout << "Input data:\nn = " << pair.n << "\nk = " << pair.k << '\n';
+        long long result = calculate(pair);
+        std::cout << "Result: " << result << '\n';
     }
 };
