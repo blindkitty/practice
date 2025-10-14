@@ -41,12 +41,12 @@ public:
     }
 
     ~Practice() {
-        for (auto task: tasks) {
+        for (const auto task: tasks) {
             delete task;
         }
     }
 
-    void executeTask(int taskNumber) {
+    void executeTask(int taskNumber) const {
         tasks[taskNumber]->execute();
     }
 
