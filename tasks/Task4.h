@@ -41,10 +41,10 @@ private:
     }
 
     void runTest(NumberPair pair) {
-        std::cout << "Input data:\nx = " << pair.x << "\ny = " << pair.y << std::endl;
+        std::cout << "\nInput data:\nx = " << pair.x << "\ny = " << pair.y << '\n';
 
         NumberPair result = transformNumbers(pair);
 
-        std::cout << "Result:\nx = " << result.x << "\ny = " << result.y << std::endl;
+        std::cout << "\nResult:\nx = " << result.x << "\ny = " << result.y << '\n';
     }
 };

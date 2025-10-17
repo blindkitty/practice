@@ -1,5 +1,7 @@
 #pragma once
-#include <bits/stdc++.h>
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include <iostream>
 #include "../ITask.h"
 
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <cmath>
+#include <vector>
 #include "../ITask.h"
 
 struct Product {

@@ -9,7 +9,7 @@ class Task13 : public ITask {
 public:
     struct charSequence {
         std::string text;
-        int n = text.size();
+        int n = (int)text.size();
     };
 
     void execute() override {

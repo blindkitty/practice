@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include "../ITask.h"
 
 class Task1 : public ITask {
