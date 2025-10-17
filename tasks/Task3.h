@@ -3,15 +3,14 @@
 #include <cmath>
 #include "../ITask.h"
 
+struct FuncParams {
+    double x;
+    double a;
+    double b;
+};
 
 class Task3 : public ITask {
 public:
-    struct FuncParams {
-        double x;
-        double a;
-        double b;
-    };
-
     void execute() override {
         FuncParams params = getUserInput();
 

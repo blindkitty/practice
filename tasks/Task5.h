@@ -4,17 +4,15 @@
 #include <vector>
 #include "../ITask.h"
 
+struct ValuePair {
+    int n;
+    int k;
+};
 
 class Task5 : public ITask {
 public:
-    struct NumberPair {
-        int n;
-        int k;
-    };
-
-
     void execute() override {
-        std::vector<NumberPair> testCases = {
+        std::vector<ValuePair> testCases = {
             {5, 1},
             {4, 2},
             {20, 10},
@@ -28,7 +26,7 @@ public:
     }
 
 private:
-    long long calculate(NumberPair pair) {
+    long long calculate(ValuePair pair) {
         long long numerator = 1;
         for (int i = 0; i < pair.k; i++) {
             numerator *= pair.n - i;
@@ -43,7 +41,7 @@ private:
         return num * fact(num - 1);
     }
 
-    void runTest(NumberPair pair) {
+    void runTest(ValuePair pair) {
         std::cout << "Input data:\nn = " << pair.n << "\nk = " << pair.k << '\n';
         long long result = calculate(pair);
         std::cout << "Result: " << result << '\n';

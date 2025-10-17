@@ -6,6 +6,5 @@
 class Task9 : public ITask {
 public:
     void execute() override {
-
     }
 };

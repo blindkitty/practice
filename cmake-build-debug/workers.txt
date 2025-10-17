@@ -1,0 +1,6 @@
+Ivanov    Assembly   10 5  8
+Petrov    Assembly   20 0  15
+Kuznetsov Painting   50 25 10
+Smirnov   Welding    5  5  5
+Popov     Welding    30 10 20
+Sidorov   Assembly   0  0  0

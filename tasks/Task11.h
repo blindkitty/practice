@@ -45,7 +45,7 @@ private:
                 temp += line[i];
             }
         }
-        for (const auto& item: numbers) {
+        for (const auto &item: numbers) {
             result.push_back(std::stoi(item));
         }
         return result;

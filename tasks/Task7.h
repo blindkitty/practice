@@ -20,7 +20,7 @@ public:
     }
 
 private:
-    double getMinSymmetricProduct(const std::vector<double>& numbers) {
+    double getMinSymmetricProduct(const std::vector<double> &numbers) const {
         std::vector<double> products;
         int n = numbers.size();
         for (int i = 0; i < n / 2; i++) {
@@ -29,7 +29,7 @@ private:
         return *std::min_element(products.begin(), products.end());
     }
 
-    void runTest(std::vector<double> a) {
+    void runTest(std::vector<double> a) const {
         std::cout << "Input data: \n";
         for (const auto &el: a) {
             std::cout << el << ' ';

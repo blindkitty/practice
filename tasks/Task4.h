@@ -4,14 +4,13 @@
 #include <vector>
 #include "../ITask.h"
 
+struct NumberPair {
+    double x;
+    double y;
+};
 
 class Task4 : public ITask {
 public:
-    struct NumberPair {
-        double x;
-        double y;
-    };
-
     void execute() override {
         std::vector<NumberPair> testCases = {
             {-15.45, -60},
