@@ -23,7 +23,7 @@ public:
     void execute() override {
         std::vector<Product> storage = getUserInput();
         double totalCost = calculateTotalCost(storage);
-        std::cout << "Total cost: " << totalCost << std::endl;
+        std::cout << "Total cost: " << totalCost << '\n';
     }
 
 private:
