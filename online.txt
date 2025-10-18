@@ -1,0 +1,752 @@
+#include <iostream>
+#include <cmath>
+#include <vector>
+#include <algorithm>
+#include <fstream>
+#include <map>
+
+class ITask {
+public:
+    virtual void execute() = 0;
+};
+
+class Task1 : public ITask {
+public:
+    void execute() override {
+        runSubtaskA();
+        runSubtaskB();
+        runSubtaskC();
+    }
+
+private:
+    void runSubtaskA() const {
+        std::cout << "a)" << '\n';
+
+        std::cout << decimalToBase(0b11100101 + 0b100011, 2) << '\n';
+
+        std::cout << decimalToBase(0b11001101 - 0b1111, 2) << '\n';
+
+        std::cout << decimalToBase(0b1011 * 0b1001, 2) << "\n\n";
+    }
+
+    void runSubtaskB() const {
+        std::cout << "b)" << '\n';
+
+        std::cout << decimalToBase(55, 2) << '\n';
+
+        std::cout << pow(2, 8) + pow(2, 7) + pow(2, 6) + pow(2, 5) + pow(2, 1) + pow(2, -2) << '\n';
+
+        std::cout << decimalToBase(convertToDecimal("442", 6), 5) << "\n\n";
+    }
+
+    void runSubtaskC() const {
+        std::cout << "c)" << '\n';
+        double a = pow(2, 7) + pow(2, 4) + pow(2, 3) + pow(2, 1) + pow(2, 0) + pow(2, -3) + pow(2, -4);
+        double b = convertToDecimal("257", 8);
+        double c = convertToDecimal("a28", 16);
+        std::cout << a + b + c;
+    }
+
+
+    static std::string decimalToBase(int value, int base) {
+        std::string newValue;
+        while (value > 0) {
+            newValue += std::to_string(value % base);
+            value /= base;
+        }
+        std::reverse(newValue.begin(), newValue.end());
+        return newValue;
+    }
+
+    static int digitToDecimal(char ch) {
+        if (ch >= '0' && ch <= '9') {
+            return ch - '0';
+        }
+        if (ch >= 'a' && ch <= 'f') {
+            return 10 + (ch - 'a');
+        }
+        return 0;
+    }
+
+    static int convertToDecimal(std::string value, int base) {
+        int decimalValue = 0;
+        int power = 1;
+        for (int i = value.length() - 1; i >= 0; --i) {
+            int digit = digitToDecimal(value[i]);
+            decimalValue += digit * power;
+            power *= base;
+        }
+        return decimalValue;
+    }
+};
+
+class Task2 : public ITask {
+public:
+    void execute() override {
+        runSubtaskA1();
+        runSubtaskA2();
+    }
+
+    void runSubtaskA1() {
+        std::cout << "x y z F" << '\n';
+        for (int x = 0; x <= 1; x++) {
+            for (int y = 0; y <= 1; y++) {
+                for (int z = 0; z <= 1; z++) {
+                    std::cout << x << ' ' << y << ' ' << z << ' '
+                            << !(x && ((y && !z) || (x && !z))) << '\n';
+                }
+            }
+        }
+    }
+
+    void runSubtaskA2() {
+        std::cout << "\nx y z F" << '\n';
+        for (int x = 0; x <= 1; x++) {
+            for (int y = 0; y <= 1; y++) {
+                for (int z = 0; z <= 1; z++) {
+                    std::cout << x << ' ' << y << ' ' << z << ' '
+                            << !(x && (y && !z || (x && !z))) << '\n';
+                }
+            }
+        }
+    }
+};
+
+struct FuncParams {
+    double x;
+    double a;
+    double b;
+};
+
+class Task3 : public ITask {
+public:
+    void execute() override {
+        FuncParams params = getUserInput();
+
+        double y = calculateY(params);
+
+        printResult(params, y);
+    }
+
+private:
+    FuncParams getUserInput() {
+        FuncParams p;
+        std::cout << "Enter value X, A and B\n";
+        std::cin >> p.x >> p.a >> p.b;
+        return p;
+    }
+
+    double calculateY(FuncParams p) {
+        return p.b * (1 - std::exp(-0.5 * p.a)) * std::cos(2 * M_PI * p.x);
+    }
+
+    void printResult(FuncParams p, double y) {
+        std::cout << "For input data: " << p.x << ", " << p.a << ", " << p.b << '\n';
+        std::cout << "Result: Y = " << y << '\n';
+    }
+};
+
+
+struct NumberPair {
+    double x;
+    double y;
+};
+
+class Task4 : public ITask {
+public:
+    void execute() override {
+        std::vector<NumberPair> testCases = {
+            {-15.45, -60},
+            {-0.5, 0.5},
+            {256, 65536},
+            {0, 0}
+        };
+
+        for (const auto &testPair: testCases) {
+            runTest(testPair);
+            std::cout << '\n';
+        }
+    }
+
+private:
+    NumberPair transformNumbers(NumberPair pair) {
+        if (pair.x < 0 && pair.y < 0) {
+            pair.x = std::abs(pair.x);
+            pair.y = std::abs(pair.y);
+        } else if (pair.x < 0 || pair.y < 0) {
+            pair.x += 0.5;
+            pair.y += 0.5;
+        } else {
+            pair.x = std::pow(pair.x, 0.5);
+            pair.y = std::pow(pair.y, 0.5);
+        }
+        return pair;
+    }
+
+    void runTest(NumberPair pair) {
+        std::cout << "\nInput data:\nx = " << pair.x << "\ny = " << pair.y << '\n';
+
+        NumberPair result = transformNumbers(pair);
+
+        std::cout << "\nResult:\nx = " << result.x << "\ny = " << result.y << '\n';
+    }
+};
+
+struct ValuePair {
+    int n;
+    int k;
+};
+
+class Task5 : public ITask {
+public:
+    void execute() override {
+        std::vector<ValuePair> testCases = {
+            {5, 1},
+            {4, 2},
+            {20, 10},
+            {0, 0}
+        };
+
+        for (auto testCase: testCases) {
+            runTest(testCase);
+            std::cout << '\n';
+        }
+    }
+
+private:
+    long long calculate(ValuePair pair) const {
+        long long numerator = 1;
+        for (int i = 0; i < pair.k; i++) {
+            numerator *= pair.n - i;
+        }
+        return numerator / fact(pair.k);
+    }
+
+    long long fact(int num) const {
+        if (num == 0 || num == 1) {
+            return 1;
+        }
+        return num * fact(num - 1);
+    }
+
+    void runTest(ValuePair pair) const {
+        std::cout << "Input data:\nn = " << pair.n << "\nk = " << pair.k << '\n';
+        long long result = calculate(pair);
+        std::cout << "Result: " << result << '\n';
+    }
+};
+
+struct CalculationParams {
+    double a;
+    double b;
+    int n;
+};
+
+struct TableEntry {
+    double x;
+    double fx;
+};
+
+
+class Task6 : public ITask {
+public:
+    void execute() override {
+        CalculationParams params = getUserInput();
+        std::vector<TableEntry> table = createTable(params);
+        int specialValueCount = analyzeTable(table);
+        printResult(table, specialValueCount);
+    }
+
+private:
+    CalculationParams getUserInput() const {
+        CalculationParams params;
+        std::cout << "Enter interval (a, b) and number of points (n)\n";
+        std::cin >> params.a >> params.b >> params.n;
+        return params;
+    }
+
+    double calculateFunction(double x) const {
+        return std::exp(-0.5 * x) * pow(cos(M_PI * x), 2);
+    }
+
+    std::vector<TableEntry> createTable(const CalculationParams &params) const {
+        std::vector<TableEntry> table;
+        double step = (params.b - params.a) / (params.n - 1);
+
+        for (int i = 0; i < params.n; i++) {
+            double x = params.a + i * step;
+            double fx = calculateFunction(x);
+            table.push_back({x, fx});
+        }
+        return table;
+    }
+
+    int analyzeTable(const std::vector<TableEntry> &table) const {
+        int count = 0;
+        for (const auto &entry: table) {
+            if (std::abs(static_cast<int>(entry.fx)) > 1) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    void printResult(const std::vector<TableEntry> &table, int count) const {
+        std::cout << "x\t\tf(x)\n";
+        for (const auto &entry: table) {
+            std::cout << entry.x << "\t\t" << entry.fx << "\n";
+        }
+        std::cout << "\nNumber of f(x), for which integer part > 1: " << count << '\n';
+    }
+};
+
+class Task7 : public ITask {
+public:
+    void execute() override {
+        std::vector<std::vector<double> > testCases = {
+            {1, 2, 3, 4, 5, 6},
+            {10, -21.2, 5, 12},
+            {20, 30, 40, 50, 1, 5},
+            {0, 0}
+        };
+
+        for (const auto &testCase: testCases) {
+            runTest(testCase);
+            std::cout << '\n';
+        }
+    }
+
+private:
+    double getMinSymmetricProduct(const std::vector<double> &numbers) const {
+        std::vector<double> products;
+        int n = numbers.size();
+        for (int i = 0; i < n / 2; i++) {
+            products.push_back(numbers[i] * numbers[n - 1 - i]);
+        }
+        return *std::min_element(products.begin(), products.end());
+    }
+
+    void runTest(std::vector<double> a) const {
+        std::cout << "Input data: \n";
+        for (const auto &el: a) {
+            std::cout << el << ' ';
+        }
+        std::cout << "\nResult: \n" << getMinSymmetricProduct(a) << '\n';
+    }
+};
+
+class Task8 : public ITask {
+public:
+    using Matrix = std::vector<std::vector<int> >;
+
+    void execute() override {
+        std::vector<Matrix> testCases = {
+            {
+                {1, 4, 7, 0},
+                {2, 5, 8, 0},
+                {3, 6, 9, 0}
+            },
+            {
+                {1, 2, 3, 4, 5, 6},
+                {7, 8, 9, 10, 11, 12},
+                {13, 14, 15, 16, 17, 18}
+            },
+            {
+                {1, 2}
+            }
+        };
+        for (auto &testCase: testCases) {
+            runTest(testCase);
+        }
+    }
+
+private:
+    Matrix swapColumns(const Matrix &originalMatrix) const {
+        Matrix newMatrix = originalMatrix;
+        int numRows = originalMatrix.size();
+        int numCols = originalMatrix[0].size();
+        for (int j = 0; j < numCols / 2; j++) {
+            for (int i = 0; i < numRows; i++) {
+                std::swap(newMatrix[i][j], newMatrix[i][numCols - 1 - j]);
+            }
+        }
+        return newMatrix;
+    }
+
+    void printMatrix(const Matrix &matrix) const {
+        for (const auto &row: matrix) {
+            for (int element: row) {
+                std::cout << element << " ";
+            }
+            std::cout << '\n';
+        }
+        std::cout << '\n';
+    }
+
+    void runTest(const Matrix &matrix) const {
+        std::cout << "Original matrix:\n";
+        printMatrix(matrix);
+
+        Matrix newMatrix = swapColumns(matrix);
+
+        std::cout << "Final matrix:\n";
+        printMatrix(newMatrix);
+    }
+};
+
+class Task9 : public ITask {
+public:
+    void execute() override {
+    }
+};
+
+struct Product {
+    std::string _name;
+    int _yearOfRelease;
+    double _unitPrice;
+    int _quantity;
+
+    Product(std::string name, int yearOfRelease, double unitPrice, int quantity) {
+        _name = name;
+        _yearOfRelease = yearOfRelease;
+        _unitPrice = unitPrice;
+        _quantity = quantity;
+    }
+};
+
+class Task10 : public ITask {
+public:
+    void execute() override {
+        std::vector<Product> storage = getUserInput();
+        double totalCost = calculateTotalCost(storage);
+        std::cout << "Total cost: " << totalCost << '\n';
+    }
+
+private:
+    std::vector<Product> getUserInput() const {
+        int numberOfProducts;
+        std::cout << "Enter number of products: \n";
+        std::cin >> numberOfProducts;
+        std::vector<Product> products;
+        for (int i = 0; i < numberOfProducts; i++) {
+            std::cout << "Enter data for " << i + 1 << " product (name, year, price, quantity): \n";
+
+            std::string name;
+            int yearOfRelease;
+            double unitPrice;
+            int quantity;
+
+            std::cin >> name >> yearOfRelease >> unitPrice >> quantity;
+
+            products.push_back(Product(name, yearOfRelease, unitPrice, quantity));
+        }
+        return products;
+    }
+
+    double calculateTotalCost(const std::vector<Product> &products) const {
+        double totalCost = 0;
+        for (auto &p: products) {
+            totalCost += p._unitPrice * p._quantity;
+        }
+        return totalCost;
+    }
+};
+
+class Task11 : public ITask {
+public:
+    void execute() override {
+        std::vector<std::string> testFiles = {
+            "Task11a.txt",
+            "Task11b.txt",
+            "Task11c.txt"
+        };
+
+        for (std::string &testCase: testFiles) {
+            std::cout << "File name: " << testCase << '\n';
+            runTest(testCase);
+            std::cout << '\n';
+        }
+    }
+
+private:
+    std::string readFile(const std::string &fileName) const {
+        std::ifstream in(fileName);
+        if (!in) {
+            std::cerr << "Error opening file " << fileName << '\n';
+            return "";
+        }
+        std::string str;
+        std::getline(in, str);
+        return str;
+    }
+
+    std::vector<int> stringToIntArray(const std::string &line) const {
+        if (line.empty()) return {};
+        std::vector<std::string> numbers;
+        std::vector<int> result;
+        std::string temp;
+        for (int i = 0; i < line.length() + 1; i++) {
+            if (line[i] == ' ' || line[i] == '\0') {
+                numbers.push_back(temp);
+                temp = "";
+            } else {
+                temp += line[i];
+            }
+        }
+        for (const auto &item: numbers) {
+            result.push_back(std::stoi(item));
+        }
+        return result;
+    }
+
+    int getSumDivisibleBy5(const std::vector<int> &numbers) const {
+        int sum = 0;
+        for (int num: numbers) {
+            if (num % 5 == 0) {
+                sum += num;
+            }
+        }
+        return sum;
+    }
+
+    void runTest(const std::string &fileName) const {
+        std::string line = readFile(fileName);
+        std::cout << "Line: " << line << '\n';
+        std::vector<int> numbers = stringToIntArray(line);
+        int sum = getSumDivisibleBy5(numbers);
+        std::cout << "Result: " << sum << '\n';
+    }
+};
+
+struct ItemCounts {
+    int A = 0;
+    int B = 0;
+    int C = 0;
+};
+
+struct Worker {
+    std::string lastName;
+    std::string workshopName;
+    ItemCounts items;
+};
+
+struct Rate {
+    double Sa;
+    double Sb;
+    double Sc;
+};
+
+struct WorkshopReport {
+    std::string workshopName;
+    ItemCounts totalItems;
+    std::map<std::string, double> salary;
+};
+
+class Task12 : public ITask {
+public:
+    void execute() override {
+        const std::string fileName = "workers.txt";
+        const Rate rates = {10, 12, 8};
+
+        std::vector<Worker> workers = getDataFromFile(fileName);
+        if (workers.empty()) {
+            std::cerr << "No data found\n";
+            return;
+        }
+
+        std::string targetWorshop = getUserInput();
+
+        WorkshopReport report = getReportData(workers, targetWorshop, rates);
+
+        displayReport(report);
+    }
+
+private:
+    std::vector<Worker> getDataFromFile(const std::string &file) const {
+        std::ifstream in(file);
+        if (!in) {
+            std::cerr << "!!!\n";
+            return {};
+        }
+
+        std::vector<Worker> data;
+        Worker temp;
+
+        while (in >> temp.lastName >> temp.workshopName >> temp.items.A >> temp.items.B >> temp.items.C) {
+            data.push_back(temp);
+        }
+        return data;
+    }
+
+    std::string getUserInput() const {
+        std::string input;
+        std::cout << "Enter workshop: \n";
+        std::cin >> input;
+        return input;
+    }
+
+    WorkshopReport getReportData(const std::vector<Worker> &workers,
+                                 const std::string &workshop,
+                                 const Rate &rates) const {
+        WorkshopReport data;
+        data.workshopName = workshop;
+        for (const auto &worker: workers) {
+            if (worker.workshopName == workshop) {
+                data.totalItems.A += worker.items.A;
+                data.totalItems.B += worker.items.B;
+                data.totalItems.C += worker.items.C;
+
+                double salary = worker.items.A * rates.Sa +
+                                worker.items.B * rates.Sb +
+                                worker.items.C * rates.Sc;
+                data.salary[worker.lastName] = salary;
+            }
+        }
+        return data;
+    }
+
+    void displayReport(const WorkshopReport &report) const {
+        std::cout << "Report for workshop: " << report.workshopName << '\n';
+
+        std::cout << "Total items: \n";
+        std::cout << "\tA: " << report.totalItems.A << '\n';
+        std::cout << "\tB: " << report.totalItems.B << '\n';
+        std::cout << "\tC: " << report.totalItems.C << '\n';
+
+        std::cout << "Salary info: \n";
+        for (const auto &pair: report.salary) {
+            std::cout << "\t" << pair.first << ": " << pair.second << " rub\n";
+        }
+    }
+};
+
+constexpr int ASCII_CASE_OFFSET = 'a' - 'A';
+
+class Task13 : public ITask {
+public:
+    struct charSequence {
+        std::string text;
+        int n = (int)text.size();
+    };
+
+    void execute() override {
+        std::vector<charSequence> testCases = {
+            {"hello world!"},
+            {"dQw4w9WgXcQ"},
+            {"65 963 56    6"},
+            {""}
+        };
+
+        for (const auto &testCase: testCases) {
+            runTest(testCase);
+            std::cout << '\n';
+        }
+    }
+
+private:
+    charSequence toUpper(const charSequence &sequence) const {
+        charSequence result = sequence;
+        for (int i = 0; i < sequence.n; i++) {
+            if (sequence.text[i] >= 'a' && sequence.text[i] <= 'z') {
+                result.text[i] -= ASCII_CASE_OFFSET;
+            }
+        }
+        return result;
+    }
+
+    void runTest(const charSequence &sequence) const {
+        std::cout << "Input data: " << sequence.text << '\n';
+        charSequence result = toUpper(sequence);
+        std::cout << "Result: " << result.text << '\n';
+    }
+};
+
+class Task14 : public ITask {
+public:
+    void execute() override {
+        std::vector<std::string> testCases = {
+            "hello world !!  !!!     !",
+            "dd 334 fgh",
+            "fgffgfgd",
+            ""
+        };
+
+        for (const auto &testCase: testCases) {
+            runTest(testCase);
+            std::cout << '\n';
+        }
+    }
+
+private:
+    int getMaxSpaces(const std::string &text) const {
+        int maxSpaces = 0;
+        int currSpaces = 0;
+        for (const char c: text) {
+            if (c == ' ') {
+                currSpaces++;
+            } else {
+                currSpaces = 0;
+            }
+            if (currSpaces > maxSpaces) {
+                maxSpaces = currSpaces;
+            }
+        }
+        return maxSpaces;
+    }
+
+    void runTest(const std::string &text) const {
+        std::cout << "Input data: " << text << '\n';
+        int result = getMaxSpaces(text);
+        std::cout << "Max spaces: " << result << '\n';
+    }
+};
+
+class Task15 : public ITask {
+public:
+    void execute() override {
+
+    }
+};
+class Practice {
+public:
+    Practice() {
+        tasks = {
+            new Task1(),
+            new Task2(),
+            new Task3(),
+            new Task4(),
+            new Task5(),
+            new Task6(),
+            new Task7(),
+            new Task8(),
+            new Task9(),
+            new Task10(),
+            new Task11(),
+            new Task12(),
+            new Task13(),
+            new Task14(),
+            new Task15()
+        };
+    }
+
+    ~Practice() {
+        for (const auto task: tasks) {
+            delete task;
+        }
+    }
+
+    void executeTask(int taskNumber) const {
+        tasks[taskNumber-1]->execute();
+    }
+
+private:
+    std::vector<ITask *> tasks;
+};
+
+
+int main() {
+    Practice practice;
+    practice.executeTask(10);
+
+    return 0;
+}
