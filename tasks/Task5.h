@@ -26,7 +26,7 @@ public:
     }
 
 private:
-    long long calculate(ValuePair pair) {
+    long long calculate(ValuePair pair) const {
         long long numerator = 1;
         for (int i = 0; i < pair.k; i++) {
             numerator *= pair.n - i;
@@ -34,14 +34,14 @@ private:
         return numerator / fact(pair.k);
     }
 
-    long long fact(int num) {
+    long long fact(int num) const {
         if (num == 0 || num == 1) {
             return 1;
         }
         return num * fact(num - 1);
     }
 
-    void runTest(ValuePair pair) {
+    void runTest(ValuePair pair) const {
         std::cout << "Input data:\nn = " << pair.n << "\nk = " << pair.k << '\n';
         long long result = calculate(pair);
         std::cout << "Result: " << result << '\n';
