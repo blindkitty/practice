@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include "../ITask.h"
 
 class Task1 : public ITask {
@@ -12,7 +13,7 @@ public:
     }
 
 private:
-    void runSubtaskA() {
+    void runSubtaskA() const {
         std::cout << "a)" << '\n';
 
         std::cout << decimalToBase(0b11100101 + 0b100011, 2) << '\n';
@@ -22,7 +23,7 @@ private:
         std::cout << decimalToBase(0b1011 * 0b1001, 2) << "\n\n";
     }
 
-    void runSubtaskB() {
+    void runSubtaskB() const {
         std::cout << "b)" << '\n';
 
         std::cout << decimalToBase(55, 2) << '\n';
@@ -32,7 +33,7 @@ private:
         std::cout << decimalToBase(convertToDecimal("442", 6), 5) << "\n\n";
     }
 
-    void runSubtaskC() {
+    void runSubtaskC() const {
         std::cout << "c)" << '\n';
         double a = pow(2, 7) + pow(2, 4) + pow(2, 3) + pow(2, 1) + pow(2, 0) + pow(2, -3) + pow(2, -4);
         double b = convertToDecimal("257", 8);
